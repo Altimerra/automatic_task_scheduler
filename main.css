@@ -1,0 +1,46 @@
+.jumbotron {
+    text-align: center;;
+}
+
+body footer {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.btn-xs{
+    padding: .3rem .4rem;
+    font-size: .9rem;
+    line-height: .6;
+    border-radius: .2rem;
+}
+
+.btn-xs > .material-icons {
+    font-size: 1rem;
+}
+
+.material-icons{
+    display: inline-flex;
+    vertical-align: top;
+}
+
+hr {
+    border-color: white;
+}
+
+
+
+/*dark theme*/
+body {
+    background-color: black;
+    color: whitesmoke;
+}
+
+.list-group-item {
+    background-color: #4d4d4d;
+}
+
+.jumbotron {
+    background-color: #000066;
+}
