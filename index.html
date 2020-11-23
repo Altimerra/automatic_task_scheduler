@@ -52,7 +52,13 @@
                 <hr>
                 <h5>Task List</h5>
                 <ul class="list-group" id="tasklist">
-                    
+                    <li class="list-group-item d-flex" id="something">   
+                        <span class="mr-auto">List item</span>
+                        <span>
+                            <span class="mr-2"><span class="badge badge-dark">1h 15m</span></span>
+                            <button type="button" class="btn btn-danger btn-sm btn-xs" onclick="handleTasklistClose(this)"><span class="material-icons">close</span></button>
+                        </span>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-4">
@@ -75,7 +81,9 @@
                 </button>
                 <hr>
                 <h5>Timeblocks</h5>
-                
+                <ul class="list-group" id="timeblockslist">
+                    
+                </ul>
             </div>
             <div class="col-md-4"></div>
         </div>

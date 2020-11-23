@@ -139,7 +139,7 @@ tasklist = {
     iconName: "close",
     createElement: function(element) {
         /*
-        <li class="list-group-item d-flex">   
+        <li class="list-group-item d-flex" id="something">   
             <span class="mr-auto">List item</span>
             <span>
                 <span class="mr-2"><span class="badge badge-dark">1h 15m</span></span>
@@ -226,7 +226,7 @@ timeblockform = {
 }
 
 timeblocksList = {
-    
+    dom: document.getElementById("timeblockslist")
 }
 
 /* ---------------- functions required for interface objects ---------------- */
@@ -282,6 +282,7 @@ function handleTimeblockAddClick() {
 //not completed
 function handleTasklistClose(closebutton) {
     console.log("close")
+    console.log(closebutton.parentNode.parentNode.id)
 }
 /* ------------------------------ Init function ----------------------------- */
 
