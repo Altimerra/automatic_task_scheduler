@@ -14,7 +14,8 @@ function Task(name, timeobj, urgency = 0, repeat = 0) {
 }
 
 function Timeblock(startTime, endTime, type = 0) {
-  this.startTime = startTime;
+  this.id = generate()
+    this.startTime = startTime;
   this.endTime = endTime;
   this.type = type;
   this.time = timeDifference(this.startTime, this.endTime);
@@ -89,6 +90,7 @@ function createTimeblocks(daystructure) {
 
 scheduler = {
   taskarray: [],
+  timeblocksarray: [],
   day: null,
   //the following two arrays are not used at the moment
   notScheduled: [],
@@ -136,6 +138,10 @@ function pushNewTask(task) {
   scheduler.taskarray.push(task);
 }
 
+function pushNewTimeblock(timeblock) {
+    scheduler.timeblocksarray.push(timeblock);
+  }
+
 function removeTask(taskid) {
   let taskarray = scheduler.taskarray;
   for (i = 0; i < taskarray.length; i++) {
@@ -144,6 +150,15 @@ function removeTask(taskid) {
     }
   }
 }
+
+function removeTimeblock(timeblockid) {
+    let timeblocksarray = scheduler.timeblocksarray;
+    for (i = 0; i < timeblocksarray.length; i++) {
+      if (timeblocksarray[i].id == timeblockid) {
+        timeblocksarray.splice(i, 1);
+      }
+    }
+  }
 /* -------------------------------------------------------------------------- */
 /*                              Interface objects                             */
 /* -------------------------------------------------------------------------- */
@@ -251,6 +266,9 @@ timeblockform = {
         timeStringToObject(this.timeblockstart.value),
         timeStringToObject(this.timeblockend.value)
       );
+      //string values added to time objects so they can be displayed in the list
+      newTimeblock.startTime.timestring = this.timeblockstart.value
+      newTimeblock.endTime.timestring = this.timeblockend.value
       return newTimeblock;
     }
   },
@@ -258,7 +276,75 @@ timeblockform = {
 
 timeblocksList = {
   dom: document.getElementById("timeblockslist"),
-  
+  listClass: "list-group-item d-flex",
+  listTextClass: "mr-auto",
+  badgeSpanClass: "mr-2",
+  badgeClass: "badge badge-dark",
+  buttonClass: "btn btn-danger btn-sm btn-xs",
+  iconClass: "material-icons",
+  iconName: "close",
+  closeHandler: "handleTimeblocksClose(this)",
+  createElement: function (element) {
+    /*
+        <li class="list-group-item d-flex" id="something">   
+                <span class="mr-auto">List item</span>
+                <span>
+                    <span class="mr-2"><span class="badge badge-dark">start</span></span>
+                    <span class="mr-2"><span class="badge badge-dark">end</span></span>
+                    <button type="button" class="btn btn-danger btn-sm btn-xs" onclick="handleTimeblocksListCLose(this)">
+                    <span class="material-icons">close</span>
+                    </button>
+                </span>
+        */
+    let newListItem = document.createElement("li");
+    newListItem.setAttribute("id", element.id);
+    newListItem.setAttribute("class", this.listClass);
+
+    let textSpan = document.createElement("span");
+    textSpan.setAttribute("class", this.listTextClass);
+    textSpan.innerHTML = element.name;
+    newListItem.appendChild(textSpan);
+
+    let secondSpan = document.createElement("span");
+
+    let badgeSpan = document.createElement("span");
+    badgeSpan.setAttribute("class", this.badgeSpanClass);
+    let badge = document.createElement("span");
+    badge.setAttribute("class", this.badgeClass);
+    badge.innerHTML =
+      element.startTime.timestring
+    badgeSpan.appendChild(badge);
+    secondSpan.appendChild(badgeSpan);
+
+    badgeSpan = document.createElement("span");
+    badgeSpan.setAttribute("class", this.badgeSpanClass);
+    badge = document.createElement("span");
+    badge.setAttribute("class", this.badgeClass);
+    badge.innerHTML =
+      element.endTime.timestring
+    badgeSpan.appendChild(badge);
+    secondSpan.appendChild(badgeSpan);
+
+    let closeButton = document.createElement("button");
+    closeButton.setAttribute("type", "button");
+    closeButton.setAttribute("class", this.buttonClass);
+    closeButton.setAttribute("onclick", this.closeHandler);
+    let icon = document.createElement("span");
+    icon.setAttribute("class", this.iconClass);
+    icon.innerHTML = this.iconName;
+    closeButton.appendChild(icon);
+
+    secondSpan.appendChild(closeButton);
+    newListItem.appendChild(secondSpan);
+
+    return newListItem;
+  },
+  addElement: function (element) {
+    this.dom.appendChild(this.createElement(element));
+  },
+  removeElement: function (element) {
+    element.remove();
+  },
 };
 
 /* ---------------- functions required for interface objects ---------------- */
@@ -304,13 +390,21 @@ function handleTaskAddClick() {
 function handleTimeblockAddClick() {
   let newTimeblock = timeblockform.createTimeblock();
   if (newTimeblock) {
+    pushNewTimeblock(newTimeblock)
+    timeblocksList.addElement(newTimeblock)
   }
 }
 
 function handleTasklistClose(closebutton) {
-  var mainelement = closebutton.parentNode.parentNode;
+  let mainelement = closebutton.parentNode.parentNode;
   removeTask(mainelement.id);
   tasklist.removeElement(mainelement);
+}
+
+function handleTimeblocksClose(closebutton) {
+    let mainelement = closebutton.parentNode.parentNode;
+    removeTimeblock(mainelement.id);
+    timeblocksList.removeElement(mainelement);
 }
 /* ------------------------------ Init function ----------------------------- */
 
