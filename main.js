@@ -14,8 +14,8 @@ function Task(name, timeobj, urgency = 0, repeat = 0) {
 }
 
 function Timeblock(startTime, endTime, type = 0) {
-  this.id = generate()
-    this.startTime = startTime;
+  this.id = generate();
+  this.startTime = startTime;
   this.endTime = endTime;
   this.type = type;
   this.time = timeDifference(this.startTime, this.endTime);
@@ -139,8 +139,8 @@ function pushNewTask(task) {
 }
 
 function pushNewTimeblock(timeblock) {
-    scheduler.timeblocksarray.push(timeblock);
-  }
+  scheduler.timeblocksarray.push(timeblock);
+}
 
 function removeTask(taskid) {
   let taskarray = scheduler.taskarray;
@@ -152,13 +152,13 @@ function removeTask(taskid) {
 }
 
 function removeTimeblock(timeblockid) {
-    let timeblocksarray = scheduler.timeblocksarray;
-    for (i = 0; i < timeblocksarray.length; i++) {
-      if (timeblocksarray[i].id == timeblockid) {
-        timeblocksarray.splice(i, 1);
-      }
+  let timeblocksarray = scheduler.timeblocksarray;
+  for (i = 0; i < timeblocksarray.length; i++) {
+    if (timeblocksarray[i].id == timeblockid) {
+      timeblocksarray.splice(i, 1);
     }
   }
+}
 /* -------------------------------------------------------------------------- */
 /*                              Interface objects                             */
 /* -------------------------------------------------------------------------- */
@@ -267,8 +267,8 @@ timeblockform = {
         timeStringToObject(this.timeblockend.value)
       );
       //string values added to time objects so they can be displayed in the list
-      newTimeblock.startTime.timestring = this.timeblockstart.value
-      newTimeblock.endTime.timestring = this.timeblockend.value
+      newTimeblock.startTime.timestring = this.timeblockstart.value;
+      newTimeblock.endTime.timestring = this.timeblockend.value;
       return newTimeblock;
     }
   },
@@ -311,8 +311,7 @@ timeblocksList = {
     badgeSpan.setAttribute("class", this.badgeSpanClass);
     let badge = document.createElement("span");
     badge.setAttribute("class", this.badgeClass);
-    badge.innerHTML =
-      element.startTime.timestring
+    badge.innerHTML = element.startTime.timestring;
     badgeSpan.appendChild(badge);
     secondSpan.appendChild(badgeSpan);
 
@@ -320,8 +319,7 @@ timeblocksList = {
     badgeSpan.setAttribute("class", this.badgeSpanClass);
     badge = document.createElement("span");
     badge.setAttribute("class", this.badgeClass);
-    badge.innerHTML =
-      element.endTime.timestring
+    badge.innerHTML = element.endTime.timestring;
     badgeSpan.appendChild(badge);
     secondSpan.appendChild(badgeSpan);
 
@@ -390,8 +388,8 @@ function handleTaskAddClick() {
 function handleTimeblockAddClick() {
   let newTimeblock = timeblockform.createTimeblock();
   if (newTimeblock) {
-    pushNewTimeblock(newTimeblock)
-    timeblocksList.addElement(newTimeblock)
+    pushNewTimeblock(newTimeblock);
+    timeblocksList.addElement(newTimeblock);
   }
 }
 
@@ -402,9 +400,9 @@ function handleTasklistClose(closebutton) {
 }
 
 function handleTimeblocksClose(closebutton) {
-    let mainelement = closebutton.parentNode.parentNode;
-    removeTimeblock(mainelement.id);
-    timeblocksList.removeElement(mainelement);
+  let mainelement = closebutton.parentNode.parentNode;
+  removeTimeblock(mainelement.id);
+  timeblocksList.removeElement(mainelement);
 }
 /* ------------------------------ Init function ----------------------------- */
 
