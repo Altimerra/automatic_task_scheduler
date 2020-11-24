@@ -157,6 +157,7 @@ tasklist = {
   buttonClass: "btn btn-danger btn-sm btn-xs",
   iconClass: "material-icons",
   iconName: "close",
+  closeHandler: "handleTasklistClose(this)",
   createElement: function (element) {
     /*
         <li class="list-group-item d-flex" id="something">   
@@ -195,7 +196,7 @@ tasklist = {
     let closeButton = document.createElement("button");
     closeButton.setAttribute("type", "button");
     closeButton.setAttribute("class", this.buttonClass);
-    closeButton.setAttribute("onclick", "handleTasklistClose(this)");
+    closeButton.setAttribute("onclick", this.closeHandler);
     let icon = document.createElement("span");
     icon.setAttribute("class", this.iconClass);
     icon.innerHTML = this.iconName;
@@ -257,6 +258,7 @@ timeblockform = {
 
 timeblocksList = {
   dom: document.getElementById("timeblockslist"),
+  
 };
 
 /* ---------------- functions required for interface objects ---------------- */
