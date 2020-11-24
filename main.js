@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- */
 /*                             Object definitions                             */
 /* -------------------------------------------------------------------------- */
-
+// SECTION Object Definitions
 function Task(name, timeobj, urgency = 0, repeat = 0) {
   this.name = name;
   this.created = new Date();
@@ -45,7 +45,7 @@ function Time(hours, minutes) {
 /* --------------------- functions required for objects --------------------- */
 
 function idGenerator() {
-  //cannot create more than 99 ids in one milisecond
+  // NOTE cannot create more than 99 ids in one milisecond
   let id = 0;
 
   return function () {
@@ -83,16 +83,16 @@ function createTimeblocks(daystructure) {
   }
   return timeblocksArray;
 }
-
+//!SECTION
 /* -------------------------------------------------------------------------- */
 /*                           Main scheduler object                            */
 /* -------------------------------------------------------------------------- */
-
+// SECTION Sheduler
 scheduler = {
   taskarray: [],
   timeblocksarray: [],
   day: null,
-  //the following two arrays are not used at the moment
+  //  FIXME the following two arrays are not used at the moment
   notScheduled: [],
   scheduledTasks: [],
   scheduleForTimeblock: function (timeblock) {
@@ -159,10 +159,11 @@ function removeTimeblock(timeblockid) {
     }
   }
 }
+//!SECTION
 /* -------------------------------------------------------------------------- */
 /*                              Interface objects                             */
 /* -------------------------------------------------------------------------- */
-
+// SECTION Interface
 tasklist = {
   dom: document.getElementById("tasklist"),
   listClass: "list-group-item d-flex",
@@ -266,7 +267,7 @@ timeblockform = {
         timeStringToObject(this.timeblockstart.value),
         timeStringToObject(this.timeblockend.value)
       );
-      //string values added to time objects so they can be displayed in the list
+      // NOTE string values added to time objects so they can be displayed in the list
       newTimeblock.startTime.timestring = this.timeblockstart.value;
       newTimeblock.endTime.timestring = this.timeblockend.value;
       return newTimeblock;
@@ -351,11 +352,11 @@ function timeStringToObject(timestring) {
   let timeObj = new Time(timestring.slice(0, 2), timestring.slice(-2));
   return timeObj;
 }
-
+//!SECTION
 /* -------------------------------------------------------------------------- */
 /*                               Initialization                               */
 /* -------------------------------------------------------------------------- */
-
+// SECTION Init
 /* ---------------------- Set options for select input ---------------------- */
 
 function setOptions() {
@@ -377,7 +378,7 @@ function setOptions() {
 }
 
 /* -------------------------- Button click handlers ------------------------- */
-//initialized in html
+// NOTE initialized in html
 function handleTaskAddClick() {
   let newTask = taskform.createTask();
   if (newTask) {
@@ -408,7 +409,7 @@ function handleTimeblocksClose(closebutton) {
 
 $(document).ready(function () {
   setOptions();
-  //popover functionality
+  // NOTE popover functionality
   $("#taskname").popover({
     animation: true,
     trigger: "manual",
@@ -445,5 +446,5 @@ $(document).ready(function () {
     $("#timeblockend").popover("hide");
   });
 });
-
+//!SECTION
 /* -------------------------------------------------------------------------- */
